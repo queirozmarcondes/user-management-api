@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcryptjs';  // Importando o bcryptjs
+import * as bcrypt from 'bcryptjs'; // Importando o bcryptjs
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../interfaces/user.interface';
@@ -33,6 +33,10 @@ export class UsersService {
 
   async findOne(id: string) {
     return this.userModel.findById(id).exec();
+  }
+
+  async findByEmail(email: string) {
+    return this.userModel.findOne({ email }).exec();
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
