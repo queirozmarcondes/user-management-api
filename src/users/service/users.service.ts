@@ -1,18 +1,18 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { Model } from 'mongoose';
-import * as bcrypt from 'bcryptjs'; // Importando o bcryptjs
+import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { User } from '../interfaces/user.interface';
+import { UserRepository } from '../infra/repositories/user.repository';
+import { User } from '../infra/schemas/user.schema';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('USER_MODEL')
-    private readonly userModel: Model<User>,
+    private readonly userRepository: UserRepository, // Injetando o repositório
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  // Método para criar um novo usuário
+  async create(createUserDto: CreateUserDto): Promise<User> {
     // Gerando o salt para o hash da senha
     const salt = await bcrypt.genSalt(10);
 
@@ -22,30 +22,32 @@ export class UsersService {
     // Substituindo a senha no DTO com a senha hashada
     createUserDto.password = hashedPassword;
 
-    // Criando o usuário com o DTO atualizado (com senha hashada)
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
+    // Criando o usuário no repositório
+    return this.userRepository.create(createUserDto);
   }
 
-  async findAll() {
-    return this.userModel.find().exec();
+  // Método para obter todos os usuários
+  async findAll(): Promise<User[]> {
+    return this.userRepository.findAll();
   }
 
-  async findOne(id: string) {
-    return this.userModel.findById(id).exec();
+  // Método para encontrar um usuário pelo ID
+  async findOne(id: string): Promise<User | null> {
+    return this.userRepository.findOneById(id);
   }
 
-  async findByEmail(email: string) {
-    return this.userModel.findOne({ email }).exec();
+  // Método para encontrar um usuário pelo e-mail
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findByEmail(email);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userModel
-      .findByIdAndUpdate(id, updateUserDto, { new: true })
-      .exec();
+  // Método para atualizar um usuário
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+    return this.userRepository.update(id, updateUserDto);
   }
 
-  async remove(id: string) {
-    return this.userModel.findByIdAndDelete(id).exec();
+  // Método para remover um usuário
+  async remove(id: string): Promise<User | null> {
+    return this.userRepository.remove(id);
   }
 }

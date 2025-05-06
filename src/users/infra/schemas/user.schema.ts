@@ -1,5 +1,6 @@
-import { Schema } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 
+// Definindo o esquema do usuário
 export const UserSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -9,6 +10,17 @@ export const UserSchema = new Schema(
     roles: { type: [String], default: ['user'] },
   },
   {
-    timestamps: true,
+    timestamps: true,  // Garante que createdAt e updatedAt sejam adicionados automaticamente
   },
 );
+
+// Definindo a interface do usuário
+export interface User extends Document {
+  name: string;
+  email: string;
+  password: string;
+  photo?: string | null;
+  roles: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+}

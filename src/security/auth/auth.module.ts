@@ -8,7 +8,8 @@ import { jwtConstants } from '../jwt/constants';
 import { AuthController } from './auth.controller';
 import { UsersService } from 'src/users/service/users.service';
 import { usersProviders } from 'src/users/infra/providers/user.providers';
-import { databaseProviders } from 'src/database/database.providers';
+import { databaseProviders } from 'src/users/infra/database/database.providers';
+import { UserRepository } from 'src/users/infra/repositories/user.repository';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { databaseProviders } from 'src/database/database.providers';
     AuthService,
     UsersService,
     JwtStrategy,
+    UserRepository,
     ...usersProviders,
     ...databaseProviders,
   ],
