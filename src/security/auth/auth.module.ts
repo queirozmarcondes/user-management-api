@@ -10,6 +10,7 @@ import { UsersService } from 'src/users/service/users.service';
 import { usersProviders } from 'src/users/infra/providers/user.providers';
 import { databaseProviders } from 'src/users/infra/database/database.providers';
 import { UserRepository } from 'src/users/infra/repositories/user.repository';
+import { LoggerService } from 'src/log/logger.service';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UserRepository } from 'src/users/infra/repositories/user.repository';
     UsersService,
     JwtStrategy,
     UserRepository,
+    LoggerService,
     ...usersProviders,
     ...databaseProviders,
   ],
