@@ -56,18 +56,6 @@ export class UsersService {
     return user;
   }
   
-
-  // async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
-  //   this.logger.log(`Atualizando usuário com ID: ${id}`);
-  //   const updatedUser = await this.userRepository.update(id, updateUserDto);
-  //   if (updatedUser) {
-  //     this.logger.log(`Usuário atualizado com sucesso: ${updatedUser.id}`);
-  //   } else {
-  //     this.logger.warn(`Erro ao atualizar usuário com ID: ${id}`);
-  //   }
-  //   return updatedUser;
-  // }
-
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
     this.logger.log(`Atualizando usuário com ID: ${id}`);
   
