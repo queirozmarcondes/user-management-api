@@ -9,10 +9,11 @@ import { LoggerService } from 'src/log/logger.service';
   imports: [DatabaseModule], // Importa o módulo de conexão com o banco de dados
   controllers: [UsersController],
   providers: [
-    UsersService,           // Serviço de usuários
+    UsersService, // Serviço de usuários
     UserRepository,
-    LoggerService,         // Repositório de usuários
-    ...usersProviders,      // Providers do modelo de usuário
+    LoggerService, // Repositório de usuários
+    ...usersProviders, // Providers do modelo de usuário
   ],
+  exports: [...usersProviders], // Exporta os providers e o serviço de usuários para uso em outros módulos
 })
 export class UsersModule {}

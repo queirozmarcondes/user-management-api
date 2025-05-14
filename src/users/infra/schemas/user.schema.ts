@@ -10,7 +10,7 @@ export const UserSchema = new Schema(
     roles: { type: [String], default: ['user'] },
   },
   {
-    timestamps: true,  // Garante que createdAt e updatedAt sejam adicionados automaticamente
+    timestamps: true, // Garante que createdAt e updatedAt sejam adicionados automaticamente
   },
 );
 

@@ -9,12 +9,12 @@ import { LoggerService } from 'src/log/logger.service';
 @Injectable()
 export class UsersService {
   constructor(
-    private readonly userRepository: UserRepository, 
-    private readonly logger: LoggerService,  // Injete o LoggerService
+    private readonly userRepository: UserRepository,
+    private readonly logger: LoggerService, // Injete o LoggerService
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    this.logger.log('Iniciando criação de usuário');  // Log para indicar que o processo começou
+    this.logger.log('Iniciando criação de usuário'); // Log para indicar que o processo começou
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
@@ -22,15 +22,15 @@ export class UsersService {
 
     const createdUser = await this.userRepository.create(createUserDto);
 
-    this.logger.log(`Usuário criado com ID: ${createdUser.id}`);  // Log para sucesso
+    this.logger.log(`Usuário criado com ID: ${createdUser.id}`); // Log para sucesso
 
     return createdUser;
   }
 
   async findAll(): Promise<User[]> {
-    this.logger.log('Buscando todos os usuários');  // Log de busca
+    this.logger.log('Buscando todos os usuários'); // Log de busca
     const users = await this.userRepository.findAll();
-    this.logger.log(`Encontrados ${users.length} usuários`);  // Log para exibir o número de usuários encontrados
+    this.logger.log(`Encontrados ${users.length} usuários`); // Log para exibir o número de usuários encontrados
     return users;
   }
 
@@ -55,24 +55,24 @@ export class UsersService {
     }
     return user;
   }
-  
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
     this.logger.log(`Atualizando usuário com ID: ${id}`);
-  
+
     // Verifica se o campo password foi atualizado e faz o hash da nova senha
     if (updateUserDto.password) {
-      const salt = await bcrypt.genSalt(10);  // Gerar salt
-      updateUserDto.password = await bcrypt.hash(updateUserDto.password, salt);  // Hash da senha
+      const salt = await bcrypt.genSalt(10); // Gerar salt
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, salt); // Hash da senha
     }
-  
+
     const updatedUser = await this.userRepository.update(id, updateUserDto);
-  
+
     if (updatedUser) {
       this.logger.log(`Usuário atualizado com sucesso: ${updatedUser.id}`);
     } else {
       this.logger.warn(`Erro ao atualizar usuário com ID: ${id}`);
     }
-  
+
     return updatedUser;
   }
 

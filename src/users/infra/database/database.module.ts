@@ -8,7 +8,9 @@ import * as mongoose from 'mongoose';
     {
       provide: 'DATABASE_CONNECTION',
       inject: [ConfigService], // Injeta o serviço de configuração
-      useFactory: async (configService: ConfigService): Promise<typeof mongoose> => {
+      useFactory: async (
+        configService: ConfigService,
+      ): Promise<typeof mongoose> => {
         const uri = configService.get<string>('DATABASE_URI');
         if (!uri) {
           throw new Error('DATABASE_URI is not defined in the configuration');

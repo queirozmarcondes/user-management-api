@@ -11,7 +11,10 @@ import { TasksModule } from './tasks/tasks.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    AuthModule, UsersModule, DatabaseModule, TasksModule,
+    AuthModule,
+    UsersModule,
+    DatabaseModule,
+    TasksModule,
   ],
 })
 export class AppModule {}
